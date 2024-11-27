@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui script
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,14 +10,43 @@ CONFIG += c++11
 
 SOURCES += \
     CalTitleBar.cpp \
-    FrameLessWidgetBase.cpp \
+    FramelessWidgetBase.cpp \
+    ShadowWidget.cpp \
     main.cpp \
     MainWidget.cpp
 
 HEADERS += \
     CalTitleBar.h \
-    FrameLessWidgetBase.h \
-    MainWidget.h
+    FramelessWidgetBase.h \
+    MainWidget.h \
+    ShadowWidget.h
+
+INCLUDEPATH += E:\A_Work\Code\QtProject\project\Qt-CalculatorDemo\eigen-3.4.0
+
+# Check the platform
+# If on macOS, add specific configuration
+macx {
+    # macOS-specific configuration
+    LIBS += -framework Cocoa
+}
+
+# If on Windows, add Windows-specific configuration
+win32 {
+    # Windows-specific configuration
+    LIBS += -luser32
+}
+
+## Windows-specific external library
+#win32 {
+#    LIBS += -L/path/to/windows/library -lmyLibrary
+#}
+
+## macOS-specific external library
+#macx {
+#    LIBS += -L/path/to/mac/library -lmyLibrary
+#}
+
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -6,6 +6,8 @@
 
 CalTitleBar::CalTitleBar(QWidget *parent) : QWidget(parent)
 {
+
+    //this->setStyleSheet("QWidget{background-color:rgb(255, 254, 253);}");
     initUi();
     connectFun();
 }
@@ -14,14 +16,14 @@ void CalTitleBar::initUi()
 {
     setAttribute(Qt::WA_StyledBackground);
     this->setFixedHeight(32 + 5 * 2);
-   this->setMinimumSize(320, 32);
+    this->setMinimumSize(320, 32);
 
     m_pLogoLbl = new QLabel(this);
     m_pLogoLbl->setFixedSize(32, 32);
 
     m_pTitleLbl = new QLabel(this);
-    m_pTitleLbl->setFixedSize(32, 32);
-    m_pTitleLbl->setText("标题");
+    m_pTitleLbl->setFixedSize(100, 32);
+    m_pTitleLbl->setText("计算器");
 
     m_pMinBtn = new QPushButton(this);
     m_pMinBtn->setFixedSize(32, 32);

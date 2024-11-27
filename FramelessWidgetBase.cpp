@@ -1,21 +1,38 @@
-#include "FrameLessWidgetBase.h"
+#include "FramelessWidgetBase.h"
+
+
+//#include <qt_windows.h>
+//#include <windows.h>
+//#include <windowsx.h>
+
+#if defined(Q_OS_WIN)
+    // Windows-specific code
 #include <qt_windows.h>
 #include <windows.h>
 #include <windowsx.h>
+#elif defined(Q_OS_MAC)
+    // macOS-specific code
+#endif
 
-FrameLessWidgetBase::FrameLessWidgetBase(QWidget *parent) : QWidget(parent)
+#include <QGraphicsDropShadowEffect>
+#include <QVBoxLayout>
+
+FramelessWidgetBase::FramelessWidgetBase(QWidget *parent) : ShadowWidget(parent)
 {
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
+    this->setAttribute(Qt::WA_TranslucentBackground, true);
+    this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint);
     setAttribute(Qt::WA_Hover);
 }
 
-FrameLessWidgetBase::~FrameLessWidgetBase()
+FramelessWidgetBase::~FramelessWidgetBase()
 {
 
 }
 
-bool FrameLessWidgetBase::nativeEvent(const QByteArray &eventType, void *message, long *result)
+bool FramelessWidgetBase::nativeEvent(const QByteArray &eventType, void *message, long *result)
 {
+
+#if defined(Q_OS_WIN)
     MSG *param = static_cast<MSG*>(message);
     switch (param->message)
     {
@@ -62,6 +79,10 @@ bool FrameLessWidgetBase::nativeEvent(const QByteArray &eventType, void *message
     }
     }
     return false;
+
+#elif defined(Q_OS_MAC)
+
+#endif
 }
 
 

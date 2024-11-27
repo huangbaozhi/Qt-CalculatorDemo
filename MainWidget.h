@@ -2,13 +2,13 @@
 #define MAINWIDGET_H
 
 #include <QWidget>
-#include "FrameLessWidgetBase.h"
+#include "FramelessWidgetBase.h"
 
 class CalTitleBar;
 class QPushButton;
 class QLabel;
 
-class MainWidget : public FrameLessWidgetBase
+class MainWidget : public FramelessWidgetBase
 {
     Q_OBJECT
 
@@ -23,6 +23,13 @@ private:
 private:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
+
+    void updateDisplay();
+    void calculateResult();
+
+private slots:
+    void onButtonClick();
+
 
 private:
     CalTitleBar *m_pCalTitleBar;
@@ -40,6 +47,10 @@ private:
 
     QLabel *m_pTitileLbl;
     QLabel *m_pNumShowLbl;
+
+    QString currentInput;
+    double result;              // 计算结果
+    QString currentOperator;    // 当前操作符
 
 
 };
