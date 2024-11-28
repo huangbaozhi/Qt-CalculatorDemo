@@ -25,10 +25,15 @@ private:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 
     void updateDisplay();
+
     void calculateResult();
+    void calculatePercentage();
+    void calculatePower();
+    void calculateSquareRoot();
 
 private slots:
     void onButtonClick();
+
 
 
 private:

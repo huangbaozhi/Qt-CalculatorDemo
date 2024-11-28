@@ -21,8 +21,6 @@ HEADERS += \
     MainWidget.h \
     ShadowWidget.h
 
-INCLUDEPATH += E:\A_Work\Code\QtProject\project\Qt-CalculatorDemo\eigen-3.4.0
-
 # Check the platform
 # If on macOS, add specific configuration
 macx {
@@ -52,3 +50,6 @@ win32 {
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resource.qrc

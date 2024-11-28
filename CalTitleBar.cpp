@@ -7,7 +7,7 @@
 CalTitleBar::CalTitleBar(QWidget *parent) : QWidget(parent)
 {
 
-    //this->setStyleSheet("QWidget{background-color:rgb(255, 254, 253);}");
+    this->setStyleSheet("QWidget{background-color:transparent;border:transparent;}");
     initUi();
     connectFun();
 }
@@ -20,19 +20,32 @@ void CalTitleBar::initUi()
 
     m_pLogoLbl = new QLabel(this);
     m_pLogoLbl->setFixedSize(32, 32);
+    m_pLogoLbl->setStyleSheet("QLabel{border-image: url(:/image/logo_32px.png);}");
+
+    QString styleLbl = R"(
+        QLabel{background-color:transparent;
+                    border:transparent;
+                    font-size: 16px;
+                    color: black;
+                    padding: 5px;}
+    )";
 
     m_pTitleLbl = new QLabel(this);
     m_pTitleLbl->setFixedSize(100, 32);
     m_pTitleLbl->setText("计算器");
+    m_pTitleLbl->setStyleSheet(styleLbl);
 
     m_pMinBtn = new QPushButton(this);
     m_pMinBtn->setFixedSize(32, 32);
+    m_pMinBtn->setStyleSheet("QPushButton{border-image: url(:/image/minBtn.png);}");
 
     m_pMaxBtn = new QPushButton(this);
     m_pMaxBtn->setFixedSize(32, 32);
+    m_pMaxBtn->setStyleSheet("QPushButton{border-image: url(:/image/maxBtn.png);}");
 
     m_pCloseBtn = new QPushButton(this);
     m_pCloseBtn->setFixedSize(32, 32);
+    m_pCloseBtn->setStyleSheet("QPushButton{border-image: url(:/image/closeBtn.png);}");
 
     QHBoxLayout *pHTitleLyt = new QHBoxLayout(this);
     pHTitleLyt->setContentsMargins(0, 0, 0, 0);
@@ -66,10 +79,12 @@ void CalTitleBar::slotClicked()
         if (pWndWgt->isMaximized())
         {
             pWndWgt->showNormal();
+            m_pMaxBtn->setStyleSheet("QPushButton{border-image: url(:/image/maxBtn.png);}");
         }
         else
         {
             pWndWgt->showMaximized();
+            m_pMaxBtn->setStyleSheet("QPushButton{border-image: url(:/image/maxBnt_1.png);}");
         }
     }
     else if (pBtn == m_pCloseBtn)

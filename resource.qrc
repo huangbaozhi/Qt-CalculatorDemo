@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/closeBtn.png</file>
+        <file>image/historyBtn.png</file>
+        <file>image/logo_16px.png</file>
+        <file>image/logo_32px.png</file>
+        <file>image/maxBnt_1.png</file>
+        <file>image/maxBtn.png</file>
+        <file>image/menuBtn.png</file>
+        <file>image/minBtn.png</file>
+        <file>image/logo.ico</file>
+    </qresource>
+</RCC>
