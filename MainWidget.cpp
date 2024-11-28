@@ -269,6 +269,22 @@ void MainWidget::calculateResult()
     }
 }
 
+void MainWidget::calculateDivisorX()
+{
+    bool ok;
+    double value = m_pNumShowLbl->text().toDouble(&ok);
+    if (ok && value >= 0)
+    {
+        double result = 1/value;
+        currentInput = QString::number(result);
+        updateDisplay();
+    }
+    else
+    {
+        QMessageBox::critical(this, "Error", "Invalid expression.");
+    }
+}
+
 void MainWidget::calculatePercentage()
 {
     bool ok;
@@ -345,6 +361,10 @@ void MainWidget::onButtonClick()
             currentInput = strNum;
             updateDisplay();
         }
+    }
+    else if (strtextBtn == "1/x")
+    {
+        calculateDivisorX();
     }
     else if (strtextBtn == "x²")
     {

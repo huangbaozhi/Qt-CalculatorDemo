@@ -27,6 +27,7 @@ private:
     void updateDisplay();
 
     void calculateResult();
+    void calculateDivisorX();
     void calculatePercentage();
     void calculatePower();
     void calculateSquareRoot();
