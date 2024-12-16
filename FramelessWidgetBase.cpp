@@ -1,6 +1,5 @@
 #include "FramelessWidgetBase.h"
 
-
 //#include <qt_windows.h>
 //#include <windows.h>
 //#include <windowsx.h>

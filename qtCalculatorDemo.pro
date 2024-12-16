@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     CalTitleBar.cpp \
     FramelessWidgetBase.cpp \
+    MenuWidget.cpp \
     ShadowWidget.cpp \
     main.cpp \
     MainWidget.cpp
@@ -19,6 +20,7 @@ HEADERS += \
     CalTitleBar.h \
     FramelessWidgetBase.h \
     MainWidget.h \
+    MenuWidget.h \
     ShadowWidget.h
 
 # Check the platform

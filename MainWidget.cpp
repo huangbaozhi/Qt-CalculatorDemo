@@ -1,5 +1,7 @@
 #include "MainWidget.h"
 #include "CalTitleBar.h"
+#include "MenuWidget.h"
+
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGridLayout>
@@ -11,6 +13,12 @@
 #include <QScriptValue>
 #include <QMessageBox>
 #include <cmath>
+#include <QMenu>
+#include <QMenuBar>
+#include <QAction>
+#include <QPropertyAnimation>
+#include <QDebug>
+
 
 #if defined(Q_OS_WIN)
 // Windows-specific code
@@ -23,6 +31,8 @@
 
 MainWidget::MainWidget(QWidget *parent)
     : FramelessWidgetBase(parent)
+    , targetWidth(300)
+    , step(10)
 {
     //this->setStyleSheet("QWidget{background-color:transparent;border:transparent;}");
     initUi();
@@ -44,8 +54,6 @@ void MainWidget::initUi()
     pCalculatorWgt->setMinimumSize(320, 468);
     QVBoxLayout *pCalculatorLyt = new QVBoxLayout(pCalculatorWgt);
     pCalculatorLyt->setContentsMargins(0, 0, 0, 0);
-
-
 
     QWidget *pHWgt = new QWidget(this);
     pHWgt->setStyleSheet(styleWgt);
@@ -203,7 +211,7 @@ void MainWidget::initUi()
     pCalculatorLyt->addWidget(pKeyBoardWgt);
 
     // 窗口阴影
-    QWidget *pShadowWidget = new QWidget(this);
+    pShadowWidget = new QWidget(this);
     pShadowWidget->setMinimumSize(320, 500);
     QGraphicsDropShadowEffect* effect = new QGraphicsDropShadowEffect;
     effect->setOffset(0, 0);
@@ -220,11 +228,20 @@ void MainWidget::initUi()
     QVBoxLayout *pVLyt = new QVBoxLayout(this);
     pVLyt->setContentsMargins(2, 2, 2, 2);
     pVLyt->addWidget(pShadowWidget);
+
+    m_pMenuWidget = new MenuWidget(this);
+    //m_pMenuWidget->show();
+    m_pMenuWidget->hide();
+    //timer = new QTimer(this);
+
+    //timer->start(20); // 每20ms调整一次大小
 }
 
 void MainWidget::connectFun()
 {
     connect(m_pCalTitleBar, &CalTitleBar::signClose, this, &MainWidget::close);
+    connect(m_pMenuBtn, &QPushButton::clicked, this, &MainWidget::onMenuClick);
+    //connect(timer, &QTimer::timeout, this, &MainWidget::onTimeOut);
 }
 
 void MainWidget::mousePressEvent(QMouseEvent *event)
@@ -396,5 +413,64 @@ void MainWidget::onButtonClick()
         updateDisplay();
     }
 
+}
+
+void MainWidget::startSlideAnimation()
+{
+
+}
+
+void MainWidget::onMenuClick()
+{
+    m_pMenuWidget->show();
+    QPoint position = mapToGlobal(m_pMenuBtn->pos());
+    //qDebug() << "Button Position:" << position;
+    int x = position.x();
+    int y = position.y();
+    m_pMenuWidget->move(x, y + 68);
+
+//    // 使用 QPropertyAnimation 来做滑动效果
+//    QPropertyAnimation *animation = new QPropertyAnimation(m_pMenuWidget, "pos");
+//    animation->setDuration(1000);// 动画持续时间
+//    int x = position.x();
+//    int y = position.y();
+//    animation->setStartValue(QPoint(x - 300, y + 68));  // 从左侧外面开始
+//    animation->setEndValue(QPoint(x, y + 68));       // 滑动到屏幕的左边缘
+//    animation->start();
+}
+
+void MainWidget::onTimeOut()
+{
+    // 创建新窗口
+    newWindow = new QWidget();
+    newWindow->setGeometry(150, 150, 0, 300);  // 新窗口初始尺寸 (0, 300)
+    newWindow->setWindowTitle("新窗口");
+
+    // 创建定时器来逐渐扩展新窗口
+    QTimer *timer = new QTimer(newWindow);
+    connect(timer, &QTimer::timeout, [this, timer]()
+    {
+        // 获取当前的窗口宽度
+        int currentWidth = newWindow->width();
+
+        // 计算下一个窗口宽度，逐步增加
+        if (currentWidth < targetWidth) {
+            currentWidth += step;
+        }
+
+        // 设置新的窗口尺寸，保持高度不变
+        newWindow->resize(currentWidth, newWindow->height());
+
+        // 如果达到目标宽度，停止定时器
+        if (currentWidth >= targetWidth) {
+            timer->stop();
+        }
+    });
+
+    // 启动定时器，逐步调整宽度
+    timer->start(20);
+
+    // 显示新窗口
+    newWindow->show();
 }
 

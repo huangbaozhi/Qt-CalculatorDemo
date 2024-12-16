@@ -3,10 +3,13 @@
 
 #include <QWidget>
 #include "FramelessWidgetBase.h"
+#include <QFrame>
+#include <QTimer>
 
 class CalTitleBar;
 class QPushButton;
 class QLabel;
+class MenuWidget;
 
 class MainWidget : public FramelessWidgetBase
 {
@@ -34,11 +37,17 @@ private:
 
 private slots:
     void onButtonClick();
+    void startSlideAnimation();
+    void onMenuClick();
+    void onTimeOut();
 
 
 
 private:
     CalTitleBar *m_pCalTitleBar;
+    MenuWidget  *m_pMenuWidget;
+    QWidget *newWindow;
+    QWidget *pShadowWidget;
 
     QPushButton *m_pMenuBtn;
     QPushButton *m_pTopBtn;
@@ -54,9 +63,16 @@ private:
     QLabel *m_pTitileLbl;
     QLabel *m_pNumShowLbl;
 
+    QFrame *m_pSlideWidget;  // 用于滑动的窗口
+    QAction *m_pSlideAction;
+
     QString currentInput;
     double result;              // 计算结果
     QString currentOperator;    // 当前操作符
+
+    int targetWidth;
+    int step;
+    QTimer *timer;
 
 
 };
